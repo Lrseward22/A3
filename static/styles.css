@@ -1,0 +1,72 @@
+header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1c3b57;
+}
+
+.header-top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.header-top > div {
+    flex: 1;
+}
+
+.welcome-message {
+    text-align: left;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #1ebe1e;
+}
+
+.auth-links {
+    text-align: right;
+}
+
+.auth-links a {
+    font-size: 1.1em;
+    padding: 10px 15px;
+    border: 1px solid #006400;
+    border-radius: 5px;
+    background-color: #228B22;
+    text-decoration: none;
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.auth-links a:hover {
+    background-color: #006400;
+}
+
+.header-center {
+    text-align: center;
+    font-size: 1.3em;
+    margin: -40px 0;
+    margin-bottom: 0;
+    color: #1ebe1e;
+}
+
+.header-bottom {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px 0;
+    background-color: #1c3b57;
+}
+
+.header-bottom a {
+    text-decoration: none;
+    color: #1ebe1e;
+}
+
+.header-bottom a:hover {
+    text-decoration: underline;
+    color: #66b2a0;
+}

@@ -1,0 +1,29 @@
+body {
+    background-color: #f0f4f8;
+    color: #1ebe1e;
+}
+
+.item-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #1c5d3a;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.item-image {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #1c5d3a;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+.item-description {
+    font-size: 1.2em;
+    color: #1ebe1e;
+    margin-bottom: 10px;
+}

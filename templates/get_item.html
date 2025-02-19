@@ -1,0 +1,26 @@
+<!doctype html>
+
+<html>
+    
+    <head>
+        {% include 'header.html' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='item.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='form-style.css') }}">
+    </head>
+
+    <body>
+        <div class="item-container">
+            <h2 class="item-name">{{ item.name }}</h2>
+            <img src={{ url_for('static', filename=item.image) }} class="item-image">
+            <p class="item-description">{{ item.description }}</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('add_to_cart') }}" class="styled-form">
+            <label for="quantity">Quantity: </label>
+            <input type="number" id="quantity" name="quantity" min="1" step="1" required>
+            <input type="hidden" name="item" value="{{ item.name }}">
+            <input type='submit' value='Add to Cart' class="submit-button">
+        </form>
+    </body>
+
+</html>

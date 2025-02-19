@@ -1,0 +1,17 @@
+
+<!doctype html>
+
+<html>
+
+    <head>
+        {% include 'header.html' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='form-style.css') }}">
+    </head>
+
+    <body>
+        <form method="POST" action="{{ url_for('logout') }}" class="styled-form">
+            <input type="submit" value="Logout" class="submit-button">
+        </form>
+    </body>
+
+</html>

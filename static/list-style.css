@@ -1,0 +1,28 @@
+body {
+    background-color: #f0f4f8;
+    color: #1ebe1e;
+}
+
+.styled-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.styled-list li {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #1c5d3a;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.styled-list a {
+    text-decoration: none;
+    color: #228B22;
+    font-weight: bold;
+}
+
+.styled-list a:hover {
+    color: #66b2a0;
+}

@@ -1,0 +1,34 @@
+<!doctype html>
+
+<html>
+
+    <head>
+        {% include 'header.html' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='form-style.css') }}">
+    </head>
+
+    <body>
+        </p>
+        <form method="POST" action="{{ url_for('create_user') }}" class="styled-form">
+            Username: <input name="username" type="text">
+            <br>
+            Name (First and Last): <input name="name" type="text">
+            <br>
+            Email: <input name='email' type='text'>
+            <br>
+            Mailing Address: <input name='address' type='text'>
+            <br>
+
+            {% if message %}
+            <p class="error-message">{{ message }}</p>
+            {% endif %}
+
+            Password: <input name="password" type="password">
+            <br>
+            Confirm Password: <input name="password_conf" type="password">
+            <br>
+            <input type="submit" value="Register" class="submit-button">
+        </form>
+    </body>
+
+</html>

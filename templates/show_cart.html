@@ -1,0 +1,21 @@
+<!doctype html>
+
+<html>
+
+    <head>
+        {% include 'header.html' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='list-style.css') }}">
+    </head>
+
+    <body>
+        <ul class="styled-list">
+        {% for item in items %}
+            {% if session.get(item) %}
+            <li> {{ item }}: {{ session.get(item) }}</li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+    </body>
+
+
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+<header>
+    <div class="header-top">
+        <div class="welcome-message">
+            {% if username %}
+            <p>Welcome, {{ username }}!</p>
+            {% endif %}
+            <p></p>
+        </div>
+        <div class="auth-links">
+            {% if username %}
+            <a href={{ url_for('logout') }}>Logout</a>
+            {% else %}
+            <a href={{ url_for('login_form') }}>Login</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="header-center">
+        <h1>Congo: {{ title }}</h1>
+    </div>
+    <nav class="header-bottom">
+        <a href={{ url_for('index') }}>Home</a>
+        {% if username %}
+        <a href={{ url_for('get_items') }}>Shop</a>
+        <a href={{ url_for('show_cart') }}>Cart</a>
+        {% endif %}
+    </nav>
+
+</header>

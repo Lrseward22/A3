@@ -1,0 +1,25 @@
+
+<!doctype html>
+
+<html>
+
+    <head>
+        {% include 'header.html' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='form-style.css') }}">
+    </head>
+
+    <body>
+        <form method="POST" action="{{ url_for('login') }}" class="styled-form">
+            {% if message %}
+            <p class="error-message">{{ message }}</p>
+            {% endif %}
+            Username: <input name="username" type="text">
+            <br>
+            Password: <input name="password" type="password">
+            <br>
+            <input type="submit" value="Login" class="submit-button">
+            <p>New User? <a href={{ url_for('register') }}>Register here</a></p>
+        </form>
+    </body>
+
+</html>
