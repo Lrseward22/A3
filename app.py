@@ -21,8 +21,14 @@ with app.app_context():
 
 @app.before_request
 def check_login():
-    allowed_routes = [url_for('index'), url_for('register'), url_for('login_form'),
-                      url_for('create_user'), url_for('login')]
+    allowed_routes = [
+        url_for('index'),
+        url_for('register'),
+        url_for('login_form'),
+        url_for('create_user'),
+        url_for('login'),
+        url_for('get_orders'),
+    ]
     if 'username' not in session and request.path not in allowed_routes and not request.path.startswith('/static'):
         return redirect(url_for('login_form'))
 
@@ -82,6 +88,65 @@ def add_to_cart():
 def show_cart():
     items = session['items']
     return render_template('show_cart.html', title='Cart', username=session.get('username'), items=items)
+
+
+@app.route('/cart/', methods=['DELETE'])
+def delete_cart_item():
+    item = request.json['item']
+    # I hate this so much
+    if item not in session:
+        return 'Item not in cart.', 404
+    del session[item]
+    return '', 200
+
+
+@app.route('/checkout/', methods=['GET'])
+def get_checkout():
+    items = [
+        (x, session[x.name])
+        for x in models.Item.query.all()
+        if x.name in session and session[x.name]
+    ]
+    total = sum(x[0].price * x[1] for x in items)
+    user = models.User.query.filter_by(username=session['username']).first()
+    return render_template('checkout.html', title='Checkout', username=session.get('username'), items=items, total=f"{total:,.2f}", user=user)
+
+
+@app.route('/orders/', methods=['POST'])
+def post_order():
+    user = models.User.query.filter_by(username=session['username']).first()
+    items = [
+        (x, session[x.name])
+        for x in models.Item.query.all()
+        if x.name in session and session[x.name]
+    ]
+    total = sum(x[0].price * x[1] for x in items)
+
+    order = models.Order(
+        name=user.name,
+        address=user.address,
+        total=total,
+    )
+    db.session.add(order)
+    db.session.commit()
+
+    for item, qty in items:
+        db.session.add(models.OrderItem(order_id=order.id, item_id=item.id, quantity=qty))
+
+    db.session.commit()
+
+    return '', 200
+
+
+@app.route('/orders/', methods=['GET'])
+def get_orders():
+    orders = models.Order.query.all()
+    for order in orders:
+        for item in order.items:
+            print(item.item)
+
+    return render_template('orders.html', title='Orders', username=session.get('username'), orders=orders)
+
 
 @app.route('/logout/', methods=['GET'])
 def logout_form():
