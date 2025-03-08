@@ -32,7 +32,7 @@ class Item(db.Model):
     name = db.Column(db.String(32), unique=True, nullable=False)
     image = db.Column(db.String(64), unique=True, nullable=False)
     description = db.Column(db.String(1000), unique=False, nullable=False)
-    price = db.Column(db.Double, unique=False, nullable=False)
+    price = db.Column(db.Numeric(10,2),unique = False,nullable=False) 
 
     def __repr__(self):
         return f'Item: {self.name}'
@@ -76,7 +76,8 @@ def add_pocket_watch():
            'anyway when you can accidentally end up in the Victorian era or the Jurassic period? '
            'It\'s all fun and games until you realize your meeting starts in five minutes and you\'re '
            'wearing a top hat and monocle.')
-    item = Item(name=name, image=image, description=desc, price=5.2)
+    itemPrice = 100.99
+    item = Item(name=name, image=image, description=desc,price = itemPrice)
     db.session.add(item)
     db.session.commit()
     return name
@@ -90,7 +91,8 @@ def add_ice_cream_machine():
            'You, also, never have to do any maintanence. Nothing special really... except maybe the fact that it conjures the creamiest, most heavenly scoops '
            'with just a thought. Imagine a machine that reads your deepest dessert dreams and manifests them instantly. And no maintenance? That\'s right, it\'s '
            'self-cleaning and as if by magic, it never runs out of ingredients. It\'s like having your personal Willy Wonka in your kitchen.')
-    item = Item(name=name, image=image, description=desc, price=5.2)
+    itemPrice = 52.49
+    item = Item(name=name, image=image, description=desc,price = itemPrice)
     db.session.add(item)
     db.session.commit()
     return name
@@ -105,7 +107,8 @@ def add_cloak():
            'But be careful not to get lost in your own invisibility-after all, with great power comes great responsibility. We wouldn\'t want '
            'any illegal things happening. Whether you\'re avoiding an awkward encounter or seeking a thrilling adventure, this cloak has got you '
            'covered... literally.')
-    item = Item(name=name, image=image, description=desc, price=5.2)
+    itemPrice = 10.00
+    item = Item(name=name, image=image, description=desc,price = itemPrice)
     db.session.add(item)
     db.session.commit()
     return name
@@ -121,7 +124,8 @@ def add_helmet():
            'your brainpower-turning you into a gridiron genius. But beware, even a super-smart helmet can\'t stop you from forgetting where you '
            'your keys after the game. Ideal for the player who wants to outthink the competition, both on and off the field. It\'s all about '
            'about balancing brawn with brains.')
-    item = Item(name=name, image=image, description=desc, price=5.2)
+    itemPrice = 12.00
+    item = Item(name=name, image=image, description=desc,price = itemPrice)
     db.session.add(item)
     db.session.commit()
     return name
@@ -137,7 +141,8 @@ def add_wormhole_generator():
            'late for a meeting on the other side of the planet or simply curious about what\'s in your neighbor\'s fridge. This handy gadget '
            'has got you covered. Just remember to close the wormhole behind you. You don\'t want any unexpected visitors from alternate '
            'realities crashing your party. Unless you do for some reason. We don\'t judge, just take your money.')
-    item = Item(name=name, image=image, description=desc, price=5.2)
+    itemPrice = 100000.00
+    item = Item(name=name, image=image, description=desc,price = itemPrice)
     db.session.add(item)
     db.session.commit()
     return name
