@@ -5,13 +5,46 @@
     <head>
         {% include 'header.html' %}
         <link rel="stylesheet" href="{{ url_for('static', filename='list-style.css') }}">
+        <style>
+            .btn {
+                background-color: #228b22;
+                padding: 10px 15px;
+                box-shadow: 0 2px 5px rbga(0,0,0,.3);
+                border-radius: 5px;
+                text-decoration: none;
+                color: #FFF;
+            }
+            .btn:hover { background-color: #006400; }
+        </style>
     </head>
 
     <body>
+        <div id='btn-box'>
+            <a class='btn' href="{{ url_for('get_items') }}">Continue Shopping</a>
+            <a class='btn' href="{{ url_for('get_checkout') }}">Checkout</a>
+        </div>
+        <script>
+            async function remove(item) {
+                const response = await fetch("{{url_for('delete_cart_item')}}", {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        item: item,
+                    }),
+                });
+                if(!response.ok){
+                    console.error('Failed to remove cart item.');
+                    return;
+                }
+                document.getElementById(item).remove();
+            }
+        </script>
         <ul class="styled-list">
         {% for item in items %}
             {% if session.get(item) %}
-            <li> {{ item }}: {{ session.get(item) }}</li>
+            <li id='{{ item }}'> {{ item }}: {{ session.get(item) }} <button class=delete onclick='remove("{{ item }}")'>Delete</button></li>
             {% endif %}
         {% endfor %}
         </ul>

@@ -32,9 +32,29 @@ class Item(db.Model):
     name = db.Column(db.String(32), unique=True, nullable=False)
     image = db.Column(db.String(64), unique=True, nullable=False)
     description = db.Column(db.String(1000), unique=False, nullable=False)
+    price = db.Column(db.Double, unique=False, nullable=False)
 
     def __repr__(self):
         return f'Item: {self.name}'
+
+
+class OrderItem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
+    quantity = db.Column(db.Integer, nullable=False, default=1)
+
+    item = db.relationship('Item', backref='order_item')
+
+
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    address = db.Column(db.String, nullable=False)
+    total = db.Column(db.Float, nullable=False)
+
+    items = db.relationship('OrderItem', backref='order', cascade='all, delete-orphan')
+
 
 def add_items():
     items = []
@@ -56,7 +76,7 @@ def add_pocket_watch():
            'anyway when you can accidentally end up in the Victorian era or the Jurassic period? '
            'It\'s all fun and games until you realize your meeting starts in five minutes and you\'re '
            'wearing a top hat and monocle.')
-    item = Item(name=name, image=image, description=desc)
+    item = Item(name=name, image=image, description=desc, price=5.2)
     db.session.add(item)
     db.session.commit()
     return name
@@ -70,7 +90,7 @@ def add_ice_cream_machine():
            'You, also, never have to do any maintanence. Nothing special really... except maybe the fact that it conjures the creamiest, most heavenly scoops '
            'with just a thought. Imagine a machine that reads your deepest dessert dreams and manifests them instantly. And no maintenance? That\'s right, it\'s '
            'self-cleaning and as if by magic, it never runs out of ingredients. It\'s like having your personal Willy Wonka in your kitchen.')
-    item = Item(name=name, image=image, description=desc)
+    item = Item(name=name, image=image, description=desc, price=5.2)
     db.session.add(item)
     db.session.commit()
     return name
@@ -85,7 +105,7 @@ def add_cloak():
            'But be careful not to get lost in your own invisibility-after all, with great power comes great responsibility. We wouldn\'t want '
            'any illegal things happening. Whether you\'re avoiding an awkward encounter or seeking a thrilling adventure, this cloak has got you '
            'covered... literally.')
-    item = Item(name=name, image=image, description=desc)
+    item = Item(name=name, image=image, description=desc, price=5.2)
     db.session.add(item)
     db.session.commit()
     return name
@@ -101,7 +121,7 @@ def add_helmet():
            'your brainpower-turning you into a gridiron genius. But beware, even a super-smart helmet can\'t stop you from forgetting where you '
            'your keys after the game. Ideal for the player who wants to outthink the competition, both on and off the field. It\'s all about '
            'about balancing brawn with brains.')
-    item = Item(name=name, image=image, description=desc)
+    item = Item(name=name, image=image, description=desc, price=5.2)
     db.session.add(item)
     db.session.commit()
     return name
@@ -117,7 +137,7 @@ def add_wormhole_generator():
            'late for a meeting on the other side of the planet or simply curious about what\'s in your neighbor\'s fridge. This handy gadget '
            'has got you covered. Just remember to close the wormhole behind you. You don\'t want any unexpected visitors from alternate '
            'realities crashing your party. Unless you do for some reason. We don\'t judge, just take your money.')
-    item = Item(name=name, image=image, description=desc)
+    item = Item(name=name, image=image, description=desc, price=5.2)
     db.session.add(item)
     db.session.commit()
     return name

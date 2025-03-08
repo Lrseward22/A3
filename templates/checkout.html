@@ -1,0 +1,52 @@
+<!doctype html>
+
+<html>
+
+    <head>
+        {% include 'header.html' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='list-style.css') }}">
+        <style>
+            .btn {
+                background-color: #228b22;
+                padding: 10px 15px;
+                box-shadow: 0 2px 5px rbga(0,0,0,.3);
+                border-radius: 5px;
+                text-decoration: none;
+                color: #FFF;
+            }
+            .btn:hover { background-color: #006400; }
+        </style>
+    </head>
+
+    <body>
+        <script>
+            async function checkout() {
+                const response = await fetch("{{url_for('post_order')}}", {
+                    method: 'POST',
+                });
+                if(!response.ok){
+                    console.error('Failed to checkout.');
+                    return;
+                }
+                const user = document.getElementById('ship-upn').innerText;
+                const addr = document.getElementById('ship-adr').innerText;
+                document.getElementById('ship-msg').innerText = `Thanks for shopping at Congo, ${user}! Your items are on their way to ${addr}.`;
+            }
+        </script>
+        <ul class="styled-list">
+        {% for item, qty in items %}
+        <li id='item-{{ item.id }}'> {{ item.name }}: {{ qty }} - ${{ "%.2f"|format(item.price)}}</li>
+        {% endfor %}
+        </ul>
+        <div>Total: <span>${{ total }}</span></div>
+        <div id='ship-msg'>
+            <span>Shipping To:</span>
+            <span id='ship-upn'>{{ user.name }}</span>
+            <br/>
+            <span id='ship-adr'>{{ user.address }}</span>
+            <button onclick='checkout()'>Complete Checkout</button>
+        </div>
+    </body>
+
+
+</html>

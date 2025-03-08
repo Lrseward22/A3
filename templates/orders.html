@@ -1,0 +1,26 @@
+<!doctype html>
+
+<html>
+
+    <head>
+        {% include 'header.html' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='list-style.css') }}">
+    </head>
+
+    <body>
+        <ul class="styled-list">
+        {% for order in orders %}
+        <li id='order-{{ order.id }}'>
+            <div>{{ order.name }} @ {{ order.address }} for ${{ "%.2f"|format(order.total) }}</div>
+            <ul>
+            {% for item in order.items %}
+            <li>{{ item.quantity }}x {{ item.item.name }}</li>
+            {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+        </ul>
+    </body>
+
+
+</html>
