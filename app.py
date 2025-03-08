@@ -28,7 +28,10 @@ def check_login():
 
 @app.route('/')
 def index():
-    return render_template('index.html', title='Home', username=session.get('username'))
+    if session.get('username'):
+        return redirect(url_for('get_items'))
+    else:
+        return redirect(url_for('login_form'))
 
 @app.route('/register/', methods=['GET'])
 def register():
