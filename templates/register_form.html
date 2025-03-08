@@ -10,6 +10,12 @@
     <body>
         </p>
         <form method="POST" action="{{ url_for('create_user') }}" class="styled-form">
+            {% if create_message %}
+            <p class="error-message">{{ create_message }}</p>
+            {% endif %}
+            {% if username_message %}
+            <p class="error-message">{{ username_message }}</p>
+            {% endif %}
             Username: <input name="username" type="text">
             <br>
             Name (First and Last): <input name="name" type="text">
@@ -18,9 +24,10 @@
             <br>
             Mailing Address: <input name='address' type='text'>
             <br>
+            Credit Card Number: <input name='payment' type='text' maxlength=16>
 
-            {% if message %}
-            <p class="error-message">{{ message }}</p>
+            {% if password_message %}
+            <p class="error-message">{{ password_message }}</p>
             {% endif %}
 
             Password: <input name="password" type="password">
