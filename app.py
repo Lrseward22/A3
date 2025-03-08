@@ -39,11 +39,14 @@ def register():
 
 @app.route('/users/', methods=['POST'])
 def create_user():
+    if models.has_user(request.form['username']):
+        return render_template('register_form.html', title='Home', username=session.get('username'), username_message='Username already exists. Please choose another.')
     if request.form['password'] != request.form['password_conf']:
-        return render_template('register_form.html', title='Home', username=session.get('username'), message='Passwords must match')
+        return render_template('register_form.html', title='Home', username=session.get('username'), password_message='Passwords must match.')
     # Create new user in database
-    models.create_user(request.form['username'], request.form['name'], request.form['email'],
-                       request.form['address'], request.form['password'])
+    if not models.create_user(request.form['username'], request.form['name'], request.form['email'],
+                              request.form['address'], request.form['payment'], request.form['password']):
+        return render_template('register_form.html', title='Home', username=session.get('username'), create_message='An unknown error occured when creating this User')
     return redirect(url_for('login_form'))
 
 
