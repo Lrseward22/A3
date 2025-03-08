@@ -9,14 +9,23 @@ class User(db.Model):
     email = db.Column(db.String(150), unique=True, nullable=False)
     address = db.Column(db.String(256), unique=False, nullable=False)
     password = db.Column(db.String(64), unique=False, nullable=True)
+    payment = db.Column(db.String(16), unique=True, nullable=False)
 
     def __repr__(self):
         return f'User: {self.name}, {self.email}'
 
-def create_user(username, name, email, address, password):
-    new_user = User(username=username, name=name, email=email, address=address, password=password)
-    db.session.add(new_user)
-    db.session.commit()
+def create_user(username, name, email, address, payment, password):
+    try:
+        new_user = User(username=username, name=name, email=email, address=address, payment=payment, password=password)
+        db.session.add(new_user)
+        db.session.commit()
+        return True
+    except Exception as e:
+        db.session.rollback()
+        return False
+
+def has_user(username):
+    return db.session.query(User).filter_by(username=username).first() is not None
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -27,6 +36,25 @@ class Item(db.Model):
 
     def __repr__(self):
         return f'Item: {self.name}'
+
+
+class OrderItem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
+    quantity = db.Column(db.Integer, nullable=False, default=1)
+
+    item = db.relationship('Item', backref='order_item')
+
+
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    address = db.Column(db.String, nullable=False)
+    total = db.Column(db.Float, nullable=False)
+
+    items = db.relationship('OrderItem', backref='order', cascade='all, delete-orphan')
+
 
 def add_items():
     items = []

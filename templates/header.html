@@ -22,10 +22,12 @@
         <h1>Congo: {{ title }}</h1>
     </div>
     <nav class="header-bottom">
-        <a href={{ url_for('index') }}>Home</a>
         {% if username %}
         <a href={{ url_for('get_items') }}>Shop</a>
         <a href={{ url_for('show_cart') }}>Cart</a>
+        {% else %}
+        <a href={{ url_for('login_form') }}>Login</a>
+        <a href={{ url_for('register') }}>Register</a>
         {% endif %}
     </nav>
 
