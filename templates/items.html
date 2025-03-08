@@ -10,9 +10,15 @@
     <body>
         <ul class="styled-list">
         {% for item in items %}
-        <li> <a href={{ url_for('get_item', itemid=item.id) }}>{{ item.name }}</a></li>
+        <li> <a href={{ url_for('get_item', itemid=item.id) }}>
+                <img src="{{url_for('static',filename = item.image)}}" alt="{{item.name}}" class="item-image">
+            <span class="item-name">{{ item.name }}</span></a></li>
         {% endfor %}
         </ul>
+
+        <div class="cart-button-container">
+            <a href="{{url_for('show_cart')}}" class="cart-button">Go to Cart</a>
+        </div>
     </body>
 
 </html>
