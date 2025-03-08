@@ -27,3 +27,10 @@ body {
     color: #1ebe1e;
     margin-bottom: 10px;
 }
+
+.item-price {
+    font-size: 1.5em; 
+    color: #228B22;
+    font-weight: bold;
+    margin-top: 10px;
+}
