@@ -141,6 +141,9 @@ def post_order():
 
     db.session.commit()
 
+    for item in session.get('items'):
+        session.pop(item, None)
+
     return '', 200
 
 
